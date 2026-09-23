@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.2' 
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.im'
+version = '1.0.0'
+
+// Modern Gradle 9 syntax for Java configuration
+java {
+    sourceCompatibility = JavaVersion.VERSION_21 // Or VERSION_17 based on your SDK runtime
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
