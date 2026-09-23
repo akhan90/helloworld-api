@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: Adnan-Khan2/ci-cd-library/.github/actions/init@main
+      - uses: akhan90/ci-cd-library/.github/actions/init@main
         with:
           yaml-paths: '.'
 
@@ -18,6 +18,6 @@ jobs:
     needs: init
     steps:
       - uses: actions/checkout@v4
-      - uses: Adnan-Khan2/ci-cd-library/.github/actions/build@main
+      - uses: akhan90/ci-cd-library/.github/actions/build@main
         with:
           java-version: '21'
