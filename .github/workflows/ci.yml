@@ -22,11 +22,12 @@ jobs:
         with:
           java-version: '21'
 
-  image:
+  image-and-scan:
     runs-on: ubuntu-latest
     needs: build
     steps:
       - uses: actions/checkout@v4
+
       - uses: akhan90/ci-cd-library/.github/actions/image@main
         with:
           image-registry: 'local'
@@ -34,11 +35,6 @@ jobs:
           image-tag: ${{ github.sha }}
           push: 'false'
 
-  scan:
-    runs-on: ubuntu-latest
-    needs: image
-    steps:
-      - uses: actions/checkout@v4
       - uses: akhan90/ci-cd-library/.github/actions/scan/image@main
         with:
           image-ref: 'local/helloworld-api:${{ github.sha }}'
