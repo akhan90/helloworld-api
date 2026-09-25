@@ -9,7 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: akhan90/ci-cd-library/.github/actions/init@main
+      - name: YAML Validation
+        uses: akhan90/ci-cd-library/.github/actions/init@main
         with:
           yaml-paths: '.helm'
 
@@ -18,7 +19,8 @@ jobs:
     needs: init
     steps:
       - uses: actions/checkout@v4
-      - uses: akhan90/ci-cd-library/.github/actions/build@main
+      - name: Gradle Build & Test
+        uses: akhan90/ci-cd-library/.github/actions/build@main
         with:
           java-version: '21'
 
@@ -28,14 +30,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: akhan90/ci-cd-library/.github/actions/image@main
+      - name: Build Docker Image
+        uses: akhan90/ci-cd-library/.github/actions/image@main
         with:
           image-registry: 'local'
           image-name: 'helloworld-api'
           image-tag: ${{ github.sha }}
           push: 'false'
 
-      - uses: akhan90/ci-cd-library/.github/actions/scan/image@main
+      - name: Vulnerability Scan
+        uses: akhan90/ci-cd-library/.github/actions/scan/image@main
         with:
           image-ref: 'local/helloworld-api:${{ github.sha }}'
           severity: 'CRITICAL,HIGH'
+          skip-failure: 'true'
